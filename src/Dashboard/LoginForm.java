@@ -1,6 +1,6 @@
 package Dashboard;
 import Dashboard.Dashboard;
-import Datebase.DatabaseConnection;
+import Database.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
 import java.sql.DriverManager;
-import Datebase.DatabaseManager;
+import Database.DatabaseManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LoginForm extends javax.swing.JFrame {
     private static final String URL = "jdbc:postgresql://localhost:5432/Inventory"; // Replace with your DB details
@@ -19,8 +21,8 @@ public class LoginForm extends javax.swing.JFrame {
     public LoginForm() {
         initComponents();
     }
-    public boolean loginHandler(String name, String password) {
-        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+    public boolean loginHandler(String name, String password) throws Exception {
+        String query = "SELECT * FROM tbluser WHERE uname = ? AND upass = ?";
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); 
             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -74,10 +76,10 @@ public class LoginForm extends javax.swing.JFrame {
         });
 
         pwd.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        pwd.setText("12345");
+        pwd.setText("admin");
 
         username.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        username.setText("den");
+        username.setText("admin");
         username.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usernameActionPerformed(evt);
@@ -135,7 +137,11 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        loginHandler(this.username.getText(), this.pwd.getText());
+        try {
+            loginHandler(this.username.getText(), this.pwd.getText());
+        } catch (Exception ex) {
+            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed

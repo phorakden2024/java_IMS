@@ -1,0 +1,257 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="sample1" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="03c32eb2-66dc-4ce9-833d-e974997363d9">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionPGDB"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<dataset name="Empty Dataset1" uuid="edaedbd0-eed7-4f76-85fc-0f9ed3ade275"/>
+	<dataset name="Empty Dataset2" uuid="24900d8d-dcde-4115-9c8f-06d1a2d5f88f"/>
+	<dataset name="productlist" uuid="9023e851-7dc8-40bf-a735-da4e130ea7fd">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionPGDB"/>
+		<query language="SQL"><![CDATA[SELECT id, prodcut_id, adjust_to, adjust_for, adjust_date, adjust_amount
+	FROM public.adjust_stock;]]></query>
+		<field name="id" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="id"/>
+			<property name="com.jaspersoft.studio.field.label" value="id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="adjust_stock"/>
+		</field>
+		<field name="prodcut_id" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="prodcut_id"/>
+			<property name="com.jaspersoft.studio.field.label" value="prodcut_id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="adjust_stock"/>
+		</field>
+		<field name="adjust_to" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="adjust_to"/>
+			<property name="com.jaspersoft.studio.field.label" value="adjust_to"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="adjust_stock"/>
+		</field>
+		<field name="adjust_for" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="adjust_for"/>
+			<property name="com.jaspersoft.studio.field.label" value="adjust_for"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="adjust_stock"/>
+		</field>
+		<field name="adjust_date" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.name" value="adjust_date"/>
+			<property name="com.jaspersoft.studio.field.label" value="adjust_date"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="adjust_stock"/>
+		</field>
+		<field name="adjust_amount" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="adjust_amount"/>
+			<property name="com.jaspersoft.studio.field.label" value="adjust_amount"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="adjust_stock"/>
+		</field>
+		<group name="id">
+			<expression><![CDATA[$F{id}]]></expression>
+		</group>
+		<group name="prodcut_id">
+			<expression><![CDATA[$F{prodcut_id}]]></expression>
+		</group>
+		<group name="adjust_to">
+			<expression><![CDATA[$F{adjust_to}]]></expression>
+		</group>
+		<group name="adjust_for">
+			<expression><![CDATA[$F{adjust_for}]]></expression>
+		</group>
+		<group name="adjust_date">
+			<expression><![CDATA[$F{adjust_date}]]></expression>
+		</group>
+		<group name="adjust_amount">
+			<expression><![CDATA[$F{adjust_amount}]]></expression>
+		</group>
+	</dataset>
+	<query language="SQL"><![CDATA[SELECT id, prodcut_id, adjust_to, adjust_for, adjust_date, adjust_amount
+	FROM public.adjust_stock;]]></query>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="adjust_stock"/>
+	</field>
+	<field name="prodcut_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="prodcut_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="prodcut_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="adjust_stock"/>
+	</field>
+	<field name="adjust_to" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="adjust_to"/>
+		<property name="com.jaspersoft.studio.field.label" value="adjust_to"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="adjust_stock"/>
+	</field>
+	<field name="adjust_for" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="adjust_for"/>
+		<property name="com.jaspersoft.studio.field.label" value="adjust_for"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="adjust_stock"/>
+	</field>
+	<field name="adjust_date" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="adjust_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="adjust_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="adjust_stock"/>
+	</field>
+	<field name="adjust_amount" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="adjust_amount"/>
+		<property name="com.jaspersoft.studio.field.label" value="adjust_amount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="adjust_stock"/>
+	</field>
+	<group name="id">
+		<expression><![CDATA[$F{id}]]></expression>
+	</group>
+	<group name="prodcut_id">
+		<expression><![CDATA[$F{prodcut_id}]]></expression>
+	</group>
+	<group name="adjust_to">
+		<expression><![CDATA[$F{adjust_to}]]></expression>
+	</group>
+	<group name="adjust_for">
+		<expression><![CDATA[$F{adjust_for}]]></expression>
+	</group>
+	<group name="adjust_date">
+		<expression><![CDATA[$F{adjust_date}]]></expression>
+	</group>
+	<group name="adjust_amount">
+		<expression><![CDATA[$F{adjust_amount}]]></expression>
+	</group>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="staticText" uuid="0c97ac91-8b6f-4686-8c3a-a3bdf452986b" x="140" y="11" width="251" height="56" fontName="Geist Mono" fontSize="29.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Product List]]></text>
+		</element>
+	</title>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader height="61" splitType="Stretch"/>
+	<detail>
+		<band height="357" splitType="Stretch">
+			<element kind="component" uuid="234bd8d4-5781-4826-99cf-eebd095ca260" x="0" y="0" width="560" height="357">
+				<component kind="table">
+					<datasetRun uuid="ce24129e-1a5d-40ae-833f-db36fc4b67d6" subDataset="productlist">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<column kind="single" uuid="b99d0cd1-480c-4260-b5c8-f36533478470" width="94">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="c79fd1c3-e3eb-4a4a-ab5d-f378e1e5f293" x="0" y="0" width="94" height="30">
+								<text><![CDATA[id]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="f53e3763-3820-4a07-a1b3-8a53596668e9" x="0" y="0" width="94" height="30">
+								<expression><![CDATA[$F{id}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="e68bb6a8-bafe-4bc9-aa25-c211d114924b" width="94">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="b57f0d13-c420-48e5-8aa9-fa656502d2be" x="0" y="0" width="94" height="30">
+								<text><![CDATA[prodcut_id]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="85967087-ad9b-4c31-b5de-8674d0efa43d" x="0" y="0" width="94" height="30">
+								<expression><![CDATA[$F{prodcut_id}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="25e5e3a2-164f-4a24-b3e8-b35091927bd6" width="93">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="2be669fe-b0eb-49e3-821b-bce8fa2fcdaa" x="0" y="0" width="93" height="30">
+								<text><![CDATA[adjust_to]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="d1e0b9fa-7458-4477-a5e8-a4e056940ba0" x="0" y="0" width="93" height="30">
+								<expression><![CDATA[$F{adjust_to}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="aff42c72-3089-466b-9c69-1840a0803396" width="93">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="39d37211-57d4-4ce4-926d-69244ce080f6" x="0" y="0" width="93" height="30">
+								<text><![CDATA[adjust_for]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="96f1482c-17a9-4874-a865-3490c8814283" x="0" y="0" width="93" height="30">
+								<expression><![CDATA[$F{adjust_for}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="39c7fd2a-6f0d-4797-aa60-f13c80e3b43b" width="93">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="92df6cbe-4b8d-4f81-9771-313c322bc69e" x="0" y="0" width="93" height="30">
+								<text><![CDATA[adjust_date]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="9a15013c-8b78-4e0f-861e-03fbf1d8e316" x="0" y="0" width="93" height="30">
+								<expression><![CDATA[$F{adjust_date}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+					<column kind="single" uuid="0e88805f-740a-4ed4-a48e-2c2ccb86ae40" width="93">
+						<tableHeader height="30" style="Table_TH"/>
+						<tableFooter height="30" style="Table_TH"/>
+						<columnHeader height="30" style="Table_CH">
+							<element kind="staticText" uuid="d0882ee8-7b30-41a0-ba62-04b89cab98f7" x="0" y="0" width="93" height="30">
+								<text><![CDATA[adjust_amount]]></text>
+							</element>
+						</columnHeader>
+						<columnFooter height="30" style="Table_CH"/>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="343fa045-a3e2-4f94-8f88-28387f8c991f" x="0" y="0" width="93" height="30">
+								<expression><![CDATA[$F{adjust_amount}]]></expression>
+							</element>
+						</detailCell>
+					</column>
+				</component>
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
+			</element>
+		</band>
+		<band height="50"/>
+		<band height="50"/>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

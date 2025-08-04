@@ -1,6 +1,8 @@
 
 package Logic;
 
+import java.util.Date;
+
 public class InvoiceDB {
     private Integer item_id;
         private Integer invoice_id;
@@ -8,13 +10,16 @@ public class InvoiceDB {
         private Double price;
         private Integer quantity;
         private Double subtotal;
-    public InvoiceDB(Integer item_id, Integer invoice_id, String product_name, Double price, Integer quantity, Double subtotal) {
+        private Date invoice_date;
+
+    public InvoiceDB(Integer item_id, Integer invoice_id, String product_name, Double price, Integer quantity, Double subtotal, Date invoice_date) {
         this.item_id = item_id;
         this.invoice_id = invoice_id;
         this.product_name = product_name;
         this.price = price;
         this.quantity = quantity;
         this.subtotal = subtotal;
+        this.invoice_date = invoice_date;
     }
 
     public Integer getItem_id() {
@@ -64,5 +69,13 @@ public class InvoiceDB {
     public void setSubtotal(Double subtotal) {
         this.subtotal = subtotal;
     }
-        
+
+    public Date getInvoice_date() {
+        return invoice_date;
+    }
+
+    public void setInvoice_date(Date invoice_date) {
+        this.invoice_date = invoice_date;
+    }
+  
 }

@@ -3,6 +3,7 @@ package ModulComponent;
 import ModulComponent.subComponent.Supplier.Sale.InvoicePanel;
 import ModulComponent.subComponent.Supplier.Sale.MenuProduct;
 import ModulComponent.subComponent.Supplier.Sale.SaleList;
+import ModulComponent.subComponent.Supplier.Sale.Invoices_list;
 import java.awt.BorderLayout;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -17,16 +18,20 @@ public class SaleModul extends javax.swing.JPanel {
    
     MenuProduct men = new MenuProduct();
     SaleList sl = new SaleList();
+    private Invoices_list inl;
     private InvoicePanel in;
-
-    public SaleModul() throws SQLException {
+    public SaleModul() throws SQLException, Exception {
+        this.inl = new Invoices_list();
         this.in = new InvoicePanel();
         initComponents();
         mainConentSale.add(men);
         mainConentSale.add(sl);
+        mainConentSale.add(inl);
         
         men.setVisible(false);
         sl.setVisible(false);
+        inl.setVisible(false);
+        men.setCard();
        
         
         
@@ -46,7 +51,7 @@ public class SaleModul extends javax.swing.JPanel {
         jButton_sale_menu = new javax.swing.JButton();
         jButton_saleList = new javax.swing.JButton();
         jButton_refresh = new javax.swing.JButton();
-        jButton_gennerateInvoice = new javax.swing.JButton();
+        btn_InvoiceList = new javax.swing.JButton();
         jButton_print_sale_list = new javax.swing.JButton();
         mainConentSale = new javax.swing.JLayeredPane();
 
@@ -80,11 +85,14 @@ public class SaleModul extends javax.swing.JPanel {
             }
         });
 
-        jButton_gennerateInvoice.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jButton_gennerateInvoice.setText("Generate Invoice");
-        jButton_gennerateInvoice.addActionListener(new java.awt.event.ActionListener() {
+        btn_InvoiceList.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btn_InvoiceList.setText("Invoice List");
+        btn_InvoiceList.setMaximumSize(new java.awt.Dimension(81, 31));
+        btn_InvoiceList.setMinimumSize(new java.awt.Dimension(81, 31));
+        btn_InvoiceList.setPreferredSize(new java.awt.Dimension(81, 31));
+        btn_InvoiceList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_gennerateInvoiceActionPerformed(evt);
+                btn_InvoiceListActionPerformed(evt);
             }
         });
 
@@ -102,12 +110,12 @@ public class SaleModul extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jButton_sale_menu, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_sale_menu, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_saleList, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_saleList, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_gennerateInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 442, Short.MAX_VALUE)
+                .addComponent(btn_InvoiceList, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 473, Short.MAX_VALUE)
                 .addComponent(jButton_print_sale_list, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -121,7 +129,7 @@ public class SaleModul extends javax.swing.JPanel {
                     .addComponent(jButton_saleList, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_sale_menu, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_gennerateInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_InvoiceList, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_print_sale_list, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
@@ -136,12 +144,14 @@ public class SaleModul extends javax.swing.JPanel {
      
         men.setVisible(true);
         sl.setVisible(false);
-        men.setCard();
+        getInl().setVisible(false);
+        
     }//GEN-LAST:event_jButton_sale_menuActionPerformed
 
     private void jButton_saleListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_saleListActionPerformed
         men.setVisible(false);
         sl.setVisible(true);
+        getInl().setVisible(false);
         sl.showInvoiceDBInTabel();
     }//GEN-LAST:event_jButton_saleListActionPerformed
 
@@ -150,21 +160,12 @@ public class SaleModul extends javax.swing.JPanel {
        
     }//GEN-LAST:event_jButton_refreshActionPerformed
 
-    private void jButton_gennerateInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_gennerateInvoiceActionPerformed
-        
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        try {
-            frame.add(new InvoicePanel(), BorderLayout.CENTER);
-        } catch (SQLException ex) {
-            Logger.getLogger(SaleModul.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        frame.pack();
-        frame.setLocationRelativeTo(null); 
-        frame.setVisible(true);
-        
-        
-    }//GEN-LAST:event_jButton_gennerateInvoiceActionPerformed
+    private void btn_InvoiceListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_InvoiceListActionPerformed
+
+        men.setVisible(false);
+        sl.setVisible(false);
+        getInl().setVisible(true);
+    }//GEN-LAST:event_btn_InvoiceListActionPerformed
 
     private void jButton_print_sale_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_print_sale_listActionPerformed
         sl.printSaleList();
@@ -172,7 +173,7 @@ public class SaleModul extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton_gennerateInvoice;
+    private javax.swing.JButton btn_InvoiceList;
     private javax.swing.JButton jButton_print_sale_list;
     private javax.swing.JButton jButton_refresh;
     private javax.swing.JButton jButton_saleList;
@@ -193,6 +194,20 @@ public class SaleModul extends javax.swing.JPanel {
      */
     public void setIn(InvoicePanel in) {
         this.in = in;
+    }
+
+    /**
+     * @return the inl
+     */
+    public Invoices_list getInl() {
+        return inl;
+    }
+
+    /**
+     * @param inl the inl to set
+     */
+    public void setInl(Invoices_list inl) {
+        this.inl = inl;
     }
 
    

@@ -14,14 +14,13 @@ import java.util.ArrayList;
 public class productCard extends javax.swing.JPanel {
 
     private static final long serialVersionUID  = 1L;
-   
+    public Integer product_id;
     public String name;
     public String category;
     public Double price;
-    public Integer quantity;
     public String image;
    
-    
+    private JLabel product_id_Label;
     private JLabel nameLabel;
     private JLabel priceLabel;
     private JLabel categoryLabel;
@@ -36,14 +35,13 @@ public class productCard extends javax.swing.JPanel {
        
     }
    
-    public productCard(String name,String category,Double price, Integer quantity,String image) {
+    public productCard(int product_id,String name,String category,Double price,String image) {
        
         initComponents();
-         
+        this.product_id = product_id;
         this.name = name;
         this.category= category;
         this.price=price;
-        this.quantity = quantity;
         this.image=image;
       
         
@@ -54,7 +52,10 @@ public class productCard extends javax.swing.JPanel {
            
         
         
+    }public Integer getProduct_id() {
+        return product_id;
     }
+    
     public String getName() {
         return name;
     }
@@ -67,30 +68,21 @@ public class productCard extends javax.swing.JPanel {
         return price;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
     public String getImage() {
         return image;
     }
-    
-  
-    
-
-    
 
     public JPanel createCardPanel() {
         
         JPanel cardPanel = new JPanel();
-        cardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        cardPanel.setBorder(BorderFactory.createLineBorder(Color.white));
         cardPanel.setBackground(Color.white);
         
         
         //Image Style
         JLabel imageLabel = new JLabel("Image");
-        imageLabel.setPreferredSize(new Dimension(245, 200));
-        imageLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        imageLabel.setPreferredSize(new Dimension(245, 250));
+//        imageLabel.setBorder(BorderFactory.createLineBorader(Color.GRAY));
         imageLabel.setFont(new java.awt.Font("Century Gothic", 0, 14));
         imageLabel.setForeground(new java.awt.Color(0, 0, 0));
         imageLabel.setText(image);
@@ -113,7 +105,10 @@ public class productCard extends javax.swing.JPanel {
          cardPanel.add(imageLabel);
        
 
-      
+        product_id_Label = new JLabel("Product ID" + product_id);
+        product_id_Label.setFont(new java.awt.Font("Century Gothic", 0, 14)); 
+        product_id_Label.setForeground(new java.awt.Color(0, 0, 0));
+        product_id_Label.setPreferredSize(new Dimension(200,20));
         //name Style
         nameLabel = new JLabel("Name: " + name);
         nameLabel.setFont(new java.awt.Font("Century Gothic", 0, 14)); 
@@ -146,7 +141,7 @@ public class productCard extends javax.swing.JPanel {
         quantitySpinner = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
         quantitySpinner.setFont(new java.awt.Font("Century Gothic", 0, 14));
         quantitySpinner.setForeground(new java.awt.Color(0, 0, 0));
-        quantitySpinner.setPreferredSize(new Dimension(75,30));
+        quantitySpinner.setPreferredSize(new Dimension(85,35));
       
         JPanel quantityPanel = new JPanel();   
         quantityPanel.setBackground(Color.white);
@@ -164,7 +159,7 @@ public class productCard extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 int selectedQuantity = (Integer) quantitySpinner.getValue();
                 if (selectedQuantity > 0) {
-                    invoice.addProduct(new Invoice.InvoiceItem(name, price, selectedQuantity));                   
+                    invoice.addProduct(new Invoice.InvoiceItem(product_id,name, price, selectedQuantity));                   
                     JOptionPane.showMessageDialog(cardPanel,
                             selectedQuantity + " x " + name + " added to invoice.",
                             "Added to Invoice", JOptionPane.INFORMATION_MESSAGE);
@@ -255,8 +250,9 @@ public class productCard extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        setMaximumSize(new java.awt.Dimension(210, 210));
-        setMinimumSize(new java.awt.Dimension(210, 210));
+        setForeground(new java.awt.Color(255, 255, 255));
+        setMaximumSize(new java.awt.Dimension(0, 0));
+        setMinimumSize(new java.awt.Dimension(0, 0));
         setPreferredSize(new java.awt.Dimension(210, 210));
 
         jLabel_name.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N

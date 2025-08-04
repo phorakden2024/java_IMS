@@ -5,7 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import Logic.product;
-import ModulComponent.ProductModul;
+import ModulComponent.SaleModul;
+import ModulComponent.subComponent.Supplier.Sale.ShowItem_Dialog;
+import Product_Component.ProductModul;
 import ModulComponent.subComponent.Supplier.Sale.productCard;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,6 +15,7 @@ import java.awt.GridLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +48,9 @@ public final class MenuProduct extends javax.swing.JPanel {
     public MenuProduct() {
        
         initComponents();
-         
-       
-       
-    
+
     }
     
-
     public String getName() {
         return name;
     }
@@ -95,23 +94,20 @@ public final class MenuProduct extends javax.swing.JPanel {
     
   
     public void setCard()
-    {   
-      
+    {     
        jPanel2.removeAll();
-       jPanel2.setLayout(new GridLayout(0, 4, 10, 10));
+       jPanel2.setLayout(new GridLayout(0, 6, 10, 10));
         List<productCard> cards = getProductsList();
         for (productCard card : cards) {
             JPanel cardPanel = card.createCardPanel();
             // Ensure the card panel has a border to simulate grid lines
             cardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
             // Set the preferred size for the card panel
-            cardPanel.setPreferredSize(new Dimension(250,350));
+            cardPanel.setPreferredSize(new Dimension(50,50));
             jPanel2.add(cardPanel);
         }
-
         jPanel2.revalidate();
         jPanel2.repaint();
-
     }
    
      // function that return an array list
@@ -119,24 +115,22 @@ public final class MenuProduct extends javax.swing.JPanel {
     {   
         List<productCard> cards = new ArrayList<>();
         try(Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT * FROM products ORDER BY id DESC;";
+            String query = "SELECT * FROM product ORDER BY id DESC;";
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {                
+            while (rs.next()) {
+               Integer product_id =rs.getInt("id");
                String name = rs.getString("name");
                String category = rs.getString("category");
-               Double price =  rs.getDouble("price");
-               Integer quantity = rs.getInt("quantity");
+               Double price =  rs.getDouble("priceofsale");
                String image = rs.getString("image");
-               cards.add(new productCard( name,category, price,quantity,image));       
+               cards.add(new productCard( product_id,name,category, price,image));       
             }
-            
-             
+               
         } catch (Exception e) {
             Logger.getLogger(ProductModul.class.getName()).log(Level.SEVERE, null, e);
         }
         return cards;
-       
     }
    
     
@@ -150,6 +144,9 @@ public final class MenuProduct extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jToolBar1 = new javax.swing.JToolBar();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        btn_show_selected_items = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
 
@@ -158,6 +155,29 @@ public final class MenuProduct extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(1072, 567));
         setPreferredSize(new java.awt.Dimension(1072, 567));
         setLayout(new java.awt.BorderLayout());
+
+        jToolBar1.setFloatable(false);
+        jToolBar1.setRollover(true);
+        jToolBar1.setPreferredSize(new java.awt.Dimension(100, 35));
+
+        jSeparator1.setEnabled(false);
+        jToolBar1.add(jSeparator1);
+
+        btn_show_selected_items.setFont(new java.awt.Font("Geist Mono", 0, 14)); // NOI18N
+        btn_show_selected_items.setText("Items Selected");
+        btn_show_selected_items.setToolTipText("");
+        btn_show_selected_items.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_show_selected_items.setFocusable(false);
+        btn_show_selected_items.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_show_selected_items.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_show_selected_items.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_show_selected_itemsActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_show_selected_items);
+
+        add(jToolBar1, java.awt.BorderLayout.PAGE_START);
 
         jScrollPane1.setMaximumSize(null);
         jScrollPane1.setMinimumSize(null);
@@ -171,10 +191,32 @@ public final class MenuProduct extends javax.swing.JPanel {
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_show_selected_itemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_show_selected_itemsActionPerformed
+        // Show Item
+//        ShowItem_Dialog std = new ShowItem_Dialog(null,true);
+//        std.setTitle("Display Selected Items");
+//        std.setVisible(true);
+        
+       
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        try {
+            frame.add(new InvoicePanel(), BorderLayout.CENTER);
+        } catch (SQLException ex) {
+            Logger.getLogger(SaleModul.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        frame.pack();
+        frame.setLocationRelativeTo(null); 
+        frame.setVisible(true);
+    }//GEN-LAST:event_btn_show_selected_itemsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_show_selected_items;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 
     

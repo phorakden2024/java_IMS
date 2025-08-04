@@ -1,6 +1,6 @@
 
 package ModulComponent;
-
+import Product_Component.ProductModul;
 import Logic.CurrentStock;
 import Logic.product;
 import java.awt.Font;
@@ -92,7 +92,6 @@ public class CurrentStockModul extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable_currentSotck.setBackground(new java.awt.Color(255, 255, 255));
         jTable_currentSotck.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jTable_currentSotck.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -107,6 +106,7 @@ public class CurrentStockModul extends javax.swing.JPanel {
         ));
         jTable_currentSotck.setRowHeight(25);
         jTable_currentSotck.setShowGrid(true);
+        jTable_currentSotck.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable_currentSotck);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

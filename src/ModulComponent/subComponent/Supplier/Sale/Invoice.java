@@ -172,12 +172,14 @@ public class Invoice {
     
 
         public static class InvoiceItem {
+            public int product_id;
             public String name; // Change to public
             public double price;  // Change to public
             public int quantity;  // Change to public
 
 
-            public InvoiceItem(String name, double price, int quantity) {
+            public InvoiceItem(int product_id ,String name, double price, int quantity) {
+                this.product_id = product_id;
                 this.name = name;
                 this.price = price;
                 this.quantity = quantity;

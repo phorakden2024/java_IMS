@@ -41,12 +41,12 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                  <Component id="jButton_sale_menu" min="-2" pref="118" max="-2" attributes="0"/>
+                  <Component id="jButton_sale_menu" min="-2" pref="120" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton_saleList" min="-2" pref="118" max="-2" attributes="0"/>
+                  <Component id="jButton_saleList" min="-2" pref="120" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton_gennerateInvoice" min="-2" pref="155" max="-2" attributes="0"/>
-                  <EmptySpace pref="442" max="32767" attributes="0"/>
+                  <Component id="btn_InvoiceList" min="-2" pref="120" max="-2" attributes="0"/>
+                  <EmptySpace pref="473" max="32767" attributes="0"/>
                   <Component id="jButton_print_sale_list" min="-2" pref="118" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton_refresh" min="-2" pref="118" max="-2" attributes="0"/>
@@ -62,7 +62,7 @@
                       <Component id="jButton_saleList" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="jButton_sale_menu" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="jButton_refresh" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
-                      <Component id="jButton_gennerateInvoice" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="btn_InvoiceList" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="jButton_print_sale_list" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="9" max="32767" attributes="0"/>
@@ -104,15 +104,24 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_refreshActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton_gennerateInvoice">
+        <Component class="javax.swing.JButton" name="btn_InvoiceList">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Generate Invoice"/>
+            <Property name="text" type="java.lang.String" value="Invoice List"/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[81, 31]"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[81, 31]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[81, 31]"/>
+            </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_gennerateInvoiceActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_InvoiceListActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton_print_sale_list">

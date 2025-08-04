@@ -1,10 +1,12 @@
 
 package ModulComponent.subComponent.Supplier.Sale;
 
-import Datebase.DatabaseManager;
+import Database.DatabaseManager;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.print.*;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -12,7 +14,6 @@ import java.util.List;
 
 public class InvoicePanel extends JPanel {
     
- 
     private static final long serialVersionUID = 1L;
     private final Invoice invoice;
     private JTextArea invoiceTextArea; // Declare JTextArea as a class member
@@ -20,6 +21,7 @@ public class InvoicePanel extends JPanel {
     private JButton btnPrintInvoice;
     private DefaultTableModel saleListTableModel;
     private JTable saleListTable;
+    private JButton btnDisplayItem;
     
     private DatabaseManager dbManager = new DatabaseManager(); // Create an instance
 
@@ -27,6 +29,7 @@ public class InvoicePanel extends JPanel {
     public InvoicePanel() throws SQLException {
         this.invoice = Invoice.getInstance();
         setLayout(new BorderLayout());
+      
 
         // Initialize JTextArea
         invoiceTextArea = new JTextArea(25, 25); // 20 rows, 50 columns - adjust as needed
@@ -39,47 +42,50 @@ public class InvoicePanel extends JPanel {
 
         JPanel buttonPanel = new JPanel(); // Panel to hold buttons
         buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT)); // Align buttons to the right
+        btnDisplayItem = new JButton("Display Item Selected");
+        btnDisplayItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateSaleListTable();
+            }
+        });
         btnGenerateInvoice = new JButton("Generate Invoice");
-        btnGenerateInvoice.addActionListener(e -> {
-            if (invoice.isEmpty()) {
-                invoiceTextArea.setText("No items in the invoice.  Please add products.");
-            } else {
-                String generatedInvoice = invoice.generateInvoice();
-                invoiceTextArea.setText(generatedInvoice);
-                try {
-                    invoice.saveToFile("invoice.txt");
-                     JOptionPane.showMessageDialog(this,
-                        "Generated Invoice Success",
-                        "Invoice Saved", JOptionPane.INFORMATION_MESSAGE);
+        btnGenerateInvoice.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              
+            }
+        }   );
+        btnGenerateInvoice.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (invoice.isEmpty()) {
+                    invoiceTextArea.setText("No items in the invoice.  Please add products.");
+                } else {
+                    updateSaleListTable();
+                    String generatedInvoice = invoice.generateInvoice();
+                    invoiceTextArea.setText(generatedInvoice);
                     try {
-                        dbManager.saveInvoice(invoice);
-                        System.out.println("Invoice saved to database successfully!");
-//                        JOptionPane.showMessageDialog(this,
-//                                "Invoice saved to database successfully!",
-//                                "Database Save Success", JOptionPane.INFORMATION_MESSAGE);
-                        // Clear the invoice after successful save and generation
-//                        invoice.clearItems();
-                    } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(this,
-                                "Error saving invoice to database: " + ex.getMessage(),
-                                "Database Save Error", JOptionPane.ERROR_MESSAGE);
-                        ex.printStackTrace(); // Print stack trace for debugging
+                        invoice.saveToFile("invoice.txt");
+                        JOptionPane.showMessageDialog(InvoicePanel.this, "Generated Invoice Success", "Invoice Saved", JOptionPane.INFORMATION_MESSAGE);
+                        try {
+                            dbManager.saveInvoice(invoice);
+                            System.out.println("Invoice saved to database successfully!");
+                            JOptionPane.showMessageDialog(InvoicePanel.this, "Invoice saved to database successfully!", "Database Save Success", JOptionPane.INFORMATION_MESSAGE);
+                            // Clear the invoice after successful save and generation
+                            invoice.clearItems();
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(InvoicePanel.this, "Error saving invoice to database: " + ex.getMessage(), "Database Save Error", JOptionPane.ERROR_MESSAGE);
+                            // Print stack trace for debugging
+                        }
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(InvoicePanel.this, "Error saving invoice: " + ex.getMessage(), "Save Error", JOptionPane.ERROR_MESSAGE);
                     }
-    
-                     
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(this,
-                        "Error saving invoice: " + ex.getMessage(),
-                        "Save Error", JOptionPane.ERROR_MESSAGE);
                 }
-                
-                
-                updateSaleListTable(); // Call method to update the table
-                
-                
             }
         });
         buttonPanel.add(btnGenerateInvoice);
+        buttonPanel.add(btnDisplayItem);
         btnPrintInvoice = new JButton("Print Invoice"); // Initialize the print button
         btnPrintInvoice.addActionListener(e -> printInvoice()); // Call printInvoice() on click
         buttonPanel.add(btnPrintInvoice); // Add print button to the button panel
@@ -97,7 +103,7 @@ public class InvoicePanel extends JPanel {
        
     }
     //add data info tale
-    private void updateSaleListTable() {
+    public void updateSaleListTable() {
         // Clear the existing data in the table
         saleListTableModel.setRowCount(0);
 

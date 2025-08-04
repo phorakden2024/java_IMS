@@ -1,45 +1,51 @@
-
 package Dashboard;
-import javax.swing.*;
-import java.awt.*;
-import javax.swing.JPanel;
+
 import ModulComponent.CurrentStockModul;
 import ModulComponent.HomeModul;
-import ModulComponent.ProductModul;
+import ModulComponent.Navbar_Home;
+import ModulComponent.Navbar_product;
+import ModulComponent.UserRole;
+import Product_Component.ProductModul;
 import ModulComponent.SaleModul;
 import ModulComponent.SupplierModul;
-import ModulComponent.subComponent.Supplier.Sale.MenuProduct;
-import ModulComponent.subComponent.Supplier.Sale.productCard;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
 
 public class Dashboard extends javax.swing.JFrame {
 
     HomeModul hm = new HomeModul();
     ProductModul propm = new ProductModul();
-    CurrentStockModul csm  = new CurrentStockModul();
+    CurrentStockModul csm = new CurrentStockModul();
     SaleModul sale;
     SupplierModul suppm = new SupplierModul();
-    MenuProduct menpro = new MenuProduct();
-    productCard pcard = new productCard();
-    public Dashboard() throws SQLException {
+    Navbar_product nvp = new Navbar_product();
+    UserRole userRole;
+    Navbar_Home  navHome = new Navbar_Home();
+
+    public Dashboard() throws SQLException, Exception {
         this.sale = new SaleModul();
+        this.sale = new SaleModul();
+        this.userRole = new UserRole();
         initComponents();
-        mainContent.add("DashBoard",hm);
-        mainContent.add("Produsts",propm);
-        mainContent.add("CurrentStock",csm);
-        mainContent.add("Supplier",suppm);
-        mainContent.add("Sales", sale);
-    
         
+        mainContent.add("DashBoard", navHome);
+        mainContent.add("Produsts", propm);
+        mainContent.add("Blank", csm);
+        mainContent.add("Supplier", suppm);
+        mainContent.add("Sales", sale);
+        mainContent.add("Product", nvp);
+        mainContent.add("User & Role", userRole);
+        
+
         hm.setVisible(false);
         propm.setVisible(false);
         csm.setVisible(false);
         sale.setVisible(false);
         suppm.setVisible(false);
+        nvp.setVisible(false);
+        userRole.setVisible(false);
+        navHome.setVisible(false);
         titel_header.setText("Dashboard");
     }
 
@@ -49,22 +55,33 @@ public class Dashboard extends javax.swing.JFrame {
 
         header = new javax.swing.JPanel();
         titel_header = new javax.swing.JLabel();
+        titel_header1 = new javax.swing.JLabel();
         navbar = new javax.swing.JPanel();
         btn_home = new javax.swing.JButton();
         btn_product = new javax.swing.JButton();
         btn_Suppliers = new javax.swing.JButton();
         btn_currentStock = new javax.swing.JButton();
         btn_sales = new javax.swing.JButton();
+        btn_userRole = new javax.swing.JButton();
         mainContent = new javax.swing.JLayeredPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Inventory System Management");
+        setExtendedState(MAXIMIZED_BOTH);
+        setMaximumSize(new java.awt.Dimension(1920, 1080));
+        setMinimumSize(new java.awt.Dimension(1920, 1080));
+        setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        header.setBackground(new java.awt.Color(255, 255, 204));
+        header.setBackground(new java.awt.Color(102, 255, 153));
         header.setName(""); // NOI18N
 
         titel_header.setFont(new java.awt.Font("Century Gothic", 1, 48)); // NOI18N
         titel_header.setText("Dashboard");
         titel_header.setToolTipText("");
+
+        titel_header1.setFont(new java.awt.Font("Century Gothic", 1, 48)); // NOI18N
+        titel_header1.setText("Inventory System Management");
+        titel_header1.setToolTipText("");
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
@@ -73,19 +90,23 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(headerLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(titel_header, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(750, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(titel_header1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(titel_header, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(titel_header, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(titel_header1))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
         getContentPane().add(header, java.awt.BorderLayout.PAGE_START);
 
-        navbar.setBackground(new java.awt.Color(204, 204, 204));
+        navbar.setBackground(new java.awt.Color(153, 153, 153));
         navbar.setPreferredSize(new java.awt.Dimension(200, 707));
 
         btn_home.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -115,7 +136,7 @@ public class Dashboard extends javax.swing.JFrame {
         });
 
         btn_currentStock.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        btn_currentStock.setText("Current Stock");
+        btn_currentStock.setText("Blank");
         btn_currentStock.setToolTipText("");
         btn_currentStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,55 +153,75 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
+        btn_userRole.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btn_userRole.setText("User & Role");
+        btn_userRole.setToolTipText("");
+        btn_userRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_userRoleActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout navbarLayout = new javax.swing.GroupLayout(navbar);
         navbar.setLayout(navbarLayout);
         navbarLayout.setHorizontalGroup(
             navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(navbarLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btn_sales, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, navbarLayout.createSequentialGroup()
+                .addContainerGap(31, Short.MAX_VALUE)
+                .addGroup(navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_home, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_currentStock, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_Suppliers, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_product, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_home, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                    .addComponent(btn_Suppliers, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_sales, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_userRole, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
         );
         navbarLayout.setVerticalGroup(
             navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(navbarLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btn_home, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_currentStock, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_product, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_Suppliers, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_sales, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(432, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addComponent(btn_home, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(btn_currentStock, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(btn_product, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(btn_Suppliers, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(btn_sales, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(btn_userRole, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(578, Short.MAX_VALUE))
         );
 
         getContentPane().add(navbar, java.awt.BorderLayout.LINE_START);
 
+        mainContent.setMaximumSize(new java.awt.Dimension(1024, 768));
+        mainContent.setMinimumSize(new java.awt.Dimension(1024, 768));
+        mainContent.setName(""); // NOI18N
+        mainContent.setPreferredSize(new java.awt.Dimension(1500, 1024));
+        mainContent.setRequestFocusEnabled(false);
+        mainContent.setVerifyInputWhenFocusTarget(false);
         mainContent.setLayout(new java.awt.CardLayout());
         getContentPane().add(mainContent, java.awt.BorderLayout.CENTER);
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_homeActionPerformed
-        hm.showInvoiceDBInTabel();
-        hm.showProductInTabel();
-        hm.showpruchseInTabel();
-        hm.showsubtotalInTabel();
-        hm.setVisible(true);
+//        hm.showInvoiceDBInTabel();
+//        hm.showProductInTabel();
+//        hm.showpruchseInTabel();
+//        hm.showsubtotalInTabel();
+//        hm.setVisible(true);
         propm.setVisible(false);
         csm.setVisible(false);
         sale.setVisible(false);
         suppm.setVisible(false);
+        nvp.setVisible(false);
+        userRole.setVisible(false);
+        navHome.setVisible(true);
         titel_header.setText("Dashboard");
     }//GEN-LAST:event_btn_homeActionPerformed
 
@@ -189,7 +230,9 @@ public class Dashboard extends javax.swing.JFrame {
         csm.setVisible(false);
         sale.setVisible(false);
         suppm.setVisible(false);
-        propm.setVisible(true);
+        nvp.setVisible(true);
+        userRole.setVisible(false);
+        navHome.setVisible(false);
         titel_header.setText("Product");
     }//GEN-LAST:event_btn_productActionPerformed
 
@@ -197,8 +240,11 @@ public class Dashboard extends javax.swing.JFrame {
         hm.setVisible(false);
         csm.setVisible(false);
         sale.setVisible(false);
+        nvp.setVisible(false);
         suppm.setVisible(true);
-        propm.setVisible(false);
+        userRole.setVisible(false);
+        navHome.setVisible(false);
+//        propm.setVisible(false);
         titel_header.setText("Suppliers");
     }//GEN-LAST:event_btn_SuppliersActionPerformed
 
@@ -209,7 +255,9 @@ public class Dashboard extends javax.swing.JFrame {
         sale.setVisible(false);
         suppm.setVisible(false);
         propm.setVisible(false);
-        titel_header.setText("CurrentStock");
+        userRole.setVisible(false);
+        navHome.setVisible(false);
+        titel_header.setText("Blank");
     }//GEN-LAST:event_btn_currentStockActionPerformed
 
     private void btn_salesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salesActionPerformed
@@ -219,16 +267,32 @@ public class Dashboard extends javax.swing.JFrame {
         sale.setVisible(true);
         suppm.setVisible(false);
         propm.setVisible(false);
+        nvp.setVisible(false);
+        userRole.setVisible(false);
+        navHome.setVisible(false);
         titel_header.setText("Sales");
- 
-        
+
+
     }//GEN-LAST:event_btn_salesActionPerformed
+
+    private void btn_userRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_userRoleActionPerformed
+        // TODO add your handling code here:
+        hm.setVisible(false);
+        csm.setVisible(false);
+        sale.setVisible(false);
+        suppm.setVisible(false);
+        propm.setVisible(false);
+        nvp.setVisible(false);
+        userRole.setVisible(true);
+        navHome.setVisible(false);
+        titel_header.setText("User and Role");
+    }//GEN-LAST:event_btn_userRoleActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -259,6 +323,8 @@ public class Dashboard extends javax.swing.JFrame {
                     new Dashboard().setVisible(true);
                 } catch (SQLException ex) {
                     Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -270,11 +336,12 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton btn_home;
     private javax.swing.JButton btn_product;
     private javax.swing.JButton btn_sales;
+    private javax.swing.JButton btn_userRole;
     private javax.swing.JPanel header;
     private javax.swing.JLayeredPane mainContent;
     private javax.swing.JPanel navbar;
     private javax.swing.JLabel titel_header;
+    private javax.swing.JLabel titel_header1;
     // End of variables declaration//GEN-END:variables
 
-   
 }

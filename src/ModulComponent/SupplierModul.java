@@ -5,12 +5,14 @@ import ModulComponent.subComponent.Supplier.VendorList;
 
 public class SupplierModul extends javax.swing.JPanel {
     
-    Order or = new Order();
+    Order or ;
     VendorList vn = new VendorList();
-    public SupplierModul() {
+    public SupplierModul() throws Exception {
         initComponents();
-        mainContentSupplier.add("Order",or);
+        this.or = new Order();
         mainContentSupplier.add("VendorList",vn);
+        mainContentSupplier.add("Order",or);
+        
         
         or.setVisible(false);
         vn.setVisible(false);
@@ -70,7 +72,7 @@ public class SupplierModul extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_order, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_vendor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(jPanel3, java.awt.BorderLayout.PAGE_START);
