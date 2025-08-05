@@ -1,162 +1,89 @@
 <!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
-<jasperReport name="DailyInvoiceReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="75f1d0e7-87f8-4f67-af1b-8f2283f99cd0">
-	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionPGDB"/>
-	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<dataset name="DatasetDailyInvoiceReport" uuid="2dd1e01c-98a2-40ad-9770-d092c697f5d4">
-		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionPGDB"/>
-		<query language="SQL"><![CDATA[SELECT invoice_id, invoice_date, total_amount
-	FROM public.invoices where invoice_date BETWEEN '2025-05-01' AND '2025-05-30';]]></query>
-		<field name="invoice_id" class="java.lang.Integer">
-			<property name="com.jaspersoft.studio.field.name" value="invoice_id"/>
-			<property name="com.jaspersoft.studio.field.label" value="invoice_id"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="invoices"/>
-		</field>
-		<field name="invoice_date" class="java.sql.Date">
-			<property name="com.jaspersoft.studio.field.name" value="invoice_date"/>
-			<property name="com.jaspersoft.studio.field.label" value="invoice_date"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="invoices"/>
-		</field>
-		<field name="total_amount" class="java.math.BigDecimal">
-			<property name="com.jaspersoft.studio.field.name" value="total_amount"/>
-			<property name="com.jaspersoft.studio.field.label" value="total_amount"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="invoices"/>
-		</field>
-		<group name="invoice_id">
-			<expression><![CDATA[$F{invoice_id}]]></expression>
-		</group>
-		<group name="invoice_date">
-			<expression><![CDATA[$F{invoice_date}]]></expression>
-		</group>
-		<group name="total_amount">
-			<expression><![CDATA[$F{total_amount}]]></expression>
-		</group>
-	</dataset>
-	<query language="SQL"><![CDATA[SELECT invoice_id, invoice_date, total_amount
-	FROM public.invoices where invoice_date BETWEEN '2025-05-01' AND '2025-05-30';]]></query>
-	<field name="invoice_id" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="invoice_id"/>
-		<property name="com.jaspersoft.studio.field.label" value="invoice_id"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="invoices"/>
-	</field>
-	<field name="invoice_date" class="java.sql.Date">
-		<property name="com.jaspersoft.studio.field.name" value="invoice_date"/>
-		<property name="com.jaspersoft.studio.field.label" value="invoice_date"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="invoices"/>
-	</field>
-	<field name="total_amount" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="total_amount"/>
-		<property name="com.jaspersoft.studio.field.label" value="total_amount"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="invoices"/>
-	</field>
-	<variable name="sumAm" calculation="Sum" class="java.lang.Double">
-		<expression><![CDATA[$F{total_amount}]]></expression>
-	</variable>
-	<group name="invoice_id">
-		<expression><![CDATA[$F{invoice_id}]]></expression>
-	</group>
-	<group name="invoice_date">
-		<expression><![CDATA[$F{invoice_date}]]></expression>
-	</group>
-	<group name="total_amount">
-		<expression><![CDATA[$F{total_amount}]]></expression>
-	</group>
-	<background splitType="Stretch"/>
-	<title height="170" splitType="Stretch">
-		<element kind="component" uuid="3d67ebe9-780a-4ab1-8c98-176b03d1d58a" x="0" y="100" width="549" height="63">
-			<component kind="table">
-				<datasetRun uuid="b892697a-7f33-4366-9c99-f2c2572de502" subDataset="DatasetDailyInvoiceReport">
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				</datasetRun>
-				<column kind="single" uuid="dca019e2-47e1-4298-9df5-29095b4232ac" width="171">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="aa72d4f2-fe83-485d-8564-150a11960bc1" x="0" y="0" width="171" height="30" fontName="!Khmer OS Siemreap" fontSize="13.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Invoice ID]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="1ef966b0-db82-4b6d-aa3a-715fc64202ac" x="0" y="0" width="171" height="30" fontName="!Khmer OS Siemreap" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{invoice_id}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
-				</column>
-				<column kind="single" uuid="b29a33c8-551d-4920-8341-b55059576fdb" width="172">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="b844c112-d15d-4d69-84cd-fede4dd488f2" x="0" y="0" width="172" height="30" fontName="!Khmer OS Siemreap" fontSize="13.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Invoice Date]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="8ede9a2e-e1fe-480d-8eab-542790487585" x="0" y="0" width="172" height="30" fontName="!Khmer OS Siemreap" pattern="dd/MMM/yyyy" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{invoice_date}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
-				</column>
-				<column kind="single" uuid="d5f2f5c8-7d3f-4f32-9ae9-ef23fa5398ee" width="206">
-					<columnHeader height="30" rowSpan="1" style="Table_CH">
-						<element kind="staticText" uuid="36284f23-bda9-4caf-9217-fbc386bc3fa5" x="0" y="0" width="206" height="30" fontName="!Khmer OS Siemreap" fontSize="13.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-							<text><![CDATA[Total Amount]]></text>
-						</element>
-					</columnHeader>
-					<detailCell height="30" style="Table_TD">
-						<element kind="textField" uuid="38e9ff9a-1e99-436e-b723-eae8a9a9217a" x="0" y="0" width="206" height="30" fontName="!Khmer OS Siemreap" pattern="$#,##0.00" hTextAlign="Center" vTextAlign="Middle">
-							<expression><![CDATA[$F{total_amount}]]></expression>
-						</element>
-					</detailCell>
-					<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
-				</column>
-			</component>
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
-			<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
-			<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
-			<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
-			<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
-		</element>
-		<element kind="staticText" uuid="d97e3cf7-6690-493a-957a-ae03a2c54f89" x="-10" y="0" width="580" height="50" fontName="!Khmer OS Siemreap" fontSize="19.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[Inventory Management]]></text>
-		</element>
-		<element kind="staticText" uuid="847cb943-bb88-4b67-9f34-347816110dae" x="0" y="50" width="191" height="30" fontName="!Khmer OS Siemreap" fontSize="16.0" bold="true" hTextAlign="Left" vTextAlign="Middle">
+<jasperReport name="MonthlyTotalReportDesign" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8f104cb8-8b6b-4399-818c-ca5e5e757a96">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="REPORT_START_DATE" forPrompting="false" class="java.util.Date"/>
+	<parameter name="REPORT_END_DATE" forPrompting="false" class="java.util.Date"/>
+	<parameter name="REPORT_MONTHLY_TOTAL" forPrompting="false" class="java.lang.Double"/>
+	<query language="sql"><![CDATA[SELECT
+            invoice_id,
+            invoice_date,
+            total_amount
+        FROM public.invoices
+        WHERE invoice_date BETWEEN $P{REPORT_START_DATE} AND $P{REPORT_END_DATE}
+        ORDER BY invoice_id]]></query>
+	<field name="invoice_id" class="java.lang.String"/>
+	<field name="invoice_date" class="java.sql.Date"/>
+	<field name="total_amount" class="java.lang.Double"/>
+	<title height="60" splitType="Stretch">
+		<element kind="staticText" uuid="85cc74d1-9f98-4931-808d-0d579ec389a9" x="0" y="0" width="555" height="30" fontSize="20.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Monthly Invoice Report]]></text>
 		</element>
-		<element kind="textField" uuid="40739b4a-e3d5-46e1-9e03-48599c8eb883" x="0" y="80" width="100" height="20" pattern="MMMMM dd, yyyy">
-			<expression><![CDATA[new java.util.Date()]]></expression>
+		<element kind="textField" uuid="bfeedea3-9f0f-4541-ae74-e1eb04e2a660" x="0" y="30" width="555" height="30" fontSize="16.0" pattern="MMMM yyyy" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[$P{REPORT_START_DATE}]]></expression>
 		</element>
 	</title>
-	<pageFooter height="50">
-		<element kind="textField" uuid="ea10451c-65c7-4720-94ac-50f76f520274" x="450" y="20" width="70" height="20" fontSize="14.0" evaluationTime="Group" pattern="$#,##0.00" evaluationGroup="total_amount" hTextAlign="Right">
-			<expression><![CDATA[$V{sumAm}]]></expression>
+	<columnHeader height="30" splitType="Stretch">
+		<element kind="staticText" uuid="3e0486b9-a0f6-4c6e-8e37-788d091ae687" x="0" y="0" width="185" height="30" backcolor="#CCCCCC" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Invoice ID]]></text>
 		</element>
-		<element kind="staticText" uuid="34e8fcfc-9876-42fe-95f3-80b603807f1f" x="400" y="20" width="50" height="20" fontSize="14.0" hTextAlign="Right">
-			<text><![CDATA[Total :]]></text>
+		<element kind="staticText" uuid="4f4b0b0f-1b13-40ec-a7ff-0d46d3ec770a" x="185" y="0" width="185" height="30" backcolor="#CCCCCC" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Invoice Date]]></text>
 		</element>
-	</pageFooter>
+		<element kind="staticText" uuid="a54c0901-e7d7-45a8-88d2-eec0c33ee5a2" x="370" y="0" width="185" height="30" backcolor="#CCCCCC" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Total Amount]]></text>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<element kind="textField" uuid="81b9a820-40bd-490b-a81d-45542fe3aaba" x="0" y="0" width="185" height="20" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{invoice_id}]]></expression>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="136c17e9-09ba-4f7a-9980-43957b4715f3" x="185" y="0" width="185" height="20" pattern="MM/dd/yyyy" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{invoice_date}]]></expression>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="b6da2f33-dcc2-4dd2-8463-b6d49cf3e40a" x="370" y="0" width="185" height="20" pattern="$#,##0.00" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{total_amount}]]></expression>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+		</band>
+	</detail>
+	<summary height="30">
+		<element kind="staticText" uuid="9de2de94-e348-4380-8a4a-7a4cea8753fd" x="0" y="0" width="370" height="30" backcolor="#D3EBFD" fontSize="13.0" bold="true" hTextAlign="Right" vTextAlign="Middle">
+			<text><![CDATA[Grand Total:  ]]></text>
+			<box>
+				<pen lineWidth="0.5"/>
+				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="textField" uuid="1935c671-bc27-4a3e-8462-22b6f8adda61" x="370" y="0" width="185" height="30" backcolor="#D3EBFD" fontSize="13.0" pattern="$#,##0.00" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[$P{REPORT_MONTHLY_TOTAL}]]></expression>
+			<box>
+				<pen lineWidth="0.5"/>
+				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+	</summary>
 </jasperReport>

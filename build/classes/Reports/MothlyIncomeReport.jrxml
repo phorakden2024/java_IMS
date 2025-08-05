@@ -1,0 +1,304 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="ProductInventoryMonthlyReport" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="35db0a12-6a6c-4466-97bd-618eec98a77a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="REPORT_START_DATE" forPrompting="false" class="java.util.Date"/>
+	<parameter name="REPORT_END_DATE" forPrompting="false" class="java.util.Date"/>
+	<query language="sql"><![CDATA[SELECT
+            pro.id AS product_id,
+            pro.name AS product_name,
+            pro.category AS product_cate,
+            COALESCE(sin_agg.total_quantity_in, 0) AS product_stockin,
+            COALESCE(sin_first.cost, 0) AS product_cost,
+            COALESCE(sin_first.cost, 0) * COALESCE(sin_agg.total_quantity_in, 0) AS total_cost,
+            COALESCE(ini_agg.total_quantity_out, 0) AS product_stockout,
+            COALESCE(sin_first.price, 0) AS product_price,
+            (COALESCE(sin_agg.total_quantity_in, 0) - COALESCE(ini_agg.total_quantity_out, 0)) AS product_available,
+            COALESCE(sin_first.price, 0) * COALESCE(ini_agg.total_quantity_out, 0) AS total_revenue,
+            (COALESCE(sin_first.price, 0) * COALESCE(ini_agg.total_quantity_out, 0)) - (COALESCE(sin_first.cost, 0) * COALESCE(ini_agg.total_quantity_out, 0)) AS income
+        FROM
+            Product pro
+        LEFT JOIN LATERAL (
+            -- Get the first cost and price for each product (this is not filtered by date)
+            SELECT
+                sin.product_id,
+                sin.cost,
+                sin.price
+            FROM
+                stockin sin
+            WHERE
+                sin.product_id = pro.id
+            LIMIT 1
+        ) AS sin_first ON TRUE
+        LEFT JOIN (
+            -- Sum quantities from stockin for the current month
+            SELECT
+                sin.product_id,
+                SUM(sin.quantity) AS total_quantity_in
+            FROM
+                stockin sin
+            GROUP BY
+                sin.product_id
+        ) AS sin_agg ON pro.id = sin_agg.product_id
+        LEFT JOIN (
+            -- Sum quantities from invoice_items for the current month
+            SELECT
+                ini.product_id,
+                SUM(ini.quantity) AS total_quantity_out
+            FROM
+                invoice_items ini
+            WHERE
+                ini.invoice_date BETWEEN $P{REPORT_START_DATE} AND $P{REPORT_END_DATE}
+            GROUP BY
+                ini.product_id
+        ) AS ini_agg ON pro.id = ini_agg.product_id
+        ORDER BY
+            pro.id;]]></query>
+	<field name="product_id" class="java.lang.Integer"/>
+	<field name="product_name" class="java.lang.String"/>
+	<field name="product_cate" class="java.lang.String"/>
+	<field name="product_stockin" class="java.lang.Integer"/>
+	<field name="product_cost" class="java.lang.Double"/>
+	<field name="total_cost" class="java.lang.Double"/>
+	<field name="product_stockout" class="java.lang.Integer"/>
+	<field name="product_price" class="java.lang.Double"/>
+	<field name="product_available" class="java.lang.Integer"/>
+	<field name="total_revenue" class="java.lang.Double"/>
+	<field name="income" class="java.lang.Double"/>
+	<variable name="TotalIncome" calculation="Sum" class="java.lang.Double">
+		<expression><![CDATA[$F{income}]]></expression>
+	</variable>
+	<title height="60" splitType="Stretch">
+		<element kind="staticText" uuid="031c6f7a-d79f-4f4a-b76f-439e0be70aed" x="0" y="0" width="802" height="30" fontSize="20.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Monthly Product Inventory & Financial Report]]></text>
+		</element>
+		<element kind="textField" uuid="1a0d0593-ba04-4081-9746-d914d3123582" x="0" y="30" width="802" height="30" fontSize="16.0" pattern="MMMM yyyy" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[$P{REPORT_START_DATE}]]></expression>
+		</element>
+	</title>
+	<columnHeader height="30" splitType="Stretch">
+		<element kind="staticText" uuid="761ab4eb-3f1a-4d2b-aa9b-248533ddc19a" x="0" y="0" width="50" height="30" backcolor="#CCCCCC" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Product ID]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="4f9c71ff-9a39-413c-bee8-c5130baa36d9" x="50" y="0" width="90" height="30" backcolor="#CCCCCC" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Product Name]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="6fe6730a-e7e5-4d25-95ce-88edcf0effca" x="140" y="0" width="70" height="30" backcolor="#CCCCCC" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Category]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="a346ca29-4775-40dc-9a0f-080515e2f149" x="210" y="0" width="70" height="30" backcolor="#CCCCCC" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Stock In]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="c07f8ede-fe6b-4771-a872-20e1e66bde2b" x="280" y="0" width="70" height="30" backcolor="#CCCCCC" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Unit Cost]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="f9b39399-3978-49f8-b92c-ce110cdcc79c" x="350" y="0" width="70" height="30" backcolor="#CCCCCC" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Total Cost]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="f4f4a42c-ce11-4da3-a112-01f434b5dfe1" x="420" y="0" width="70" height="30" backcolor="#CCCCCC" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Stock Out]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="8261c17f-75e2-4434-adad-155f75b4e8e1" x="490" y="0" width="70" height="30" backcolor="#CCCCCC" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Unit Price]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="10623781-b10f-4d61-b461-3942f1293f69" x="560" y="0" width="70" height="30" backcolor="#CCCCCC" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Available]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="a0acb76f-3788-45ee-89ce-1294adfe7e3b" x="630" y="0" width="80" height="30" backcolor="#CCCCCC" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Total Revenue]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="a97b2a44-babb-4f6c-9c8d-142054a7d284" x="710" y="0" width="92" height="30" backcolor="#CCCCCC" fontSize="8.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Income]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<element kind="textField" uuid="044c8614-46e3-444a-92b6-99698d56441f" x="0" y="0" width="50" height="20" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{product_id}]]></expression>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="76d67a17-d16b-419d-bd21-6608a285d99a" x="50" y="0" width="90" height="20" hTextAlign="Left" vTextAlign="Middle">
+				<expression><![CDATA[$F{product_name}]]></expression>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="2f4ff1ff-d605-4dd5-8af6-452be3de34a4" x="140" y="0" width="70" height="20" hTextAlign="Left" vTextAlign="Middle">
+				<expression><![CDATA[$F{product_cate}]]></expression>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="d4c28ad1-8555-41b9-b376-c466ff221c88" x="210" y="0" width="70" height="20" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{product_stockin}]]></expression>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="4c6ba146-837e-4474-a496-ddfaebc161b4" x="280" y="0" width="70" height="20" pattern="$#,##0.00" hTextAlign="Right" vTextAlign="Middle">
+				<expression><![CDATA[$F{product_cost}]]></expression>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="912d5dd6-e73f-4e76-9702-161f8bf933d7" x="350" y="0" width="70" height="20" pattern="$#,##0.00" hTextAlign="Right" vTextAlign="Middle">
+				<expression><![CDATA[$F{total_cost}]]></expression>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="66e406ef-cc7b-4ce0-9d4c-abb94f0a59fb" x="420" y="0" width="70" height="20" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{product_stockout}]]></expression>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="4d6e8cea-d0bf-43f7-9160-5b7f91155d35" x="490" y="0" width="70" height="20" pattern="$#,##0.00" hTextAlign="Right" vTextAlign="Middle">
+				<expression><![CDATA[$F{product_price}]]></expression>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="ac266392-259e-4636-833b-c862af514f86" x="560" y="0" width="70" height="20" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{product_available}]]></expression>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="6f1a07ac-d25a-4b75-a7e0-c4cbc8353ecb" x="630" y="0" width="80" height="20" pattern="$#,##0.00" hTextAlign="Right" vTextAlign="Middle">
+				<expression><![CDATA[$F{total_revenue}]]></expression>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="f1923361-5b44-43d8-9dad-9004b053ee2a" x="710" y="0" width="92" height="20" pattern="$#,##0.00" hTextAlign="Right" vTextAlign="Middle">
+				<expression><![CDATA[$F{income}]]></expression>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+		</band>
+	</detail>
+	<summary height="30">
+		<element kind="staticText" uuid="5f8d7398-040b-44b2-8ae0-5360807c8021" x="560" y="0" width="150" height="30" backcolor="#D3EBFD" fontSize="13.0" bold="true" hTextAlign="Right" vTextAlign="Middle">
+			<text><![CDATA[Total Income:  ]]></text>
+			<box>
+				<pen lineWidth="0.5"/>
+				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="textField" uuid="fdb2bcb9-8e4c-48ba-a09f-01867eb537d4" x="710" y="0" width="92" height="30" backcolor="#D3EBFD" fontSize="13.0" pattern="$#,##0.00" bold="true" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[$V{TotalIncome}]]></expression>
+			<box>
+				<pen lineWidth="0.5"/>
+				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+	</summary>
+</jasperReport>

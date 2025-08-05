@@ -146,6 +146,11 @@ public class IncomeRFrm extends javax.swing.JPanel {
         btn_report.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_report.setPreferredSize(new java.awt.Dimension(90, 35));
         btn_report.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_report.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_reportActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btn_report);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -252,6 +257,12 @@ public class IncomeRFrm extends javax.swing.JPanel {
             Logger.getLogger(IncomeRFrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_refreshActionPerformed
+
+    private void btn_reportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportActionPerformed
+        incomeReport rvR = new incomeReport(null, true);
+        rvR.setTitle("Exspenses Report");
+        rvR.setVisible(true);
+    }//GEN-LAST:event_btn_reportActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

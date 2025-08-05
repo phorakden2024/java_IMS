@@ -7,6 +7,7 @@ package Product_Component;
 import DAO.StockDetailDao;
 import DAO.StockDetailTableDao;
 import DTO.StockDetailTableDto;
+import UI.StcokDetailReport;
 import java.awt.Font;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -76,7 +77,7 @@ public class StockDetail_Component extends javax.swing.JPanel {
         jSeparator2 = new javax.swing.JToolBar.Separator();
         jButton4 = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
-        jButton1 = new javax.swing.JButton();
+        btn_report = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Stickdetail = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
@@ -117,14 +118,19 @@ public class StockDetail_Component extends javax.swing.JPanel {
         jToolBar1.add(jButton4);
         jToolBar1.add(jSeparator4);
 
-        jButton1.setFont(new java.awt.Font("Geist Mono", 1, 14)); // NOI18N
-        jButton1.setText("Report");
-        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setPreferredSize(new java.awt.Dimension(70, 28));
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
+        btn_report.setFont(new java.awt.Font("Geist Mono", 1, 14)); // NOI18N
+        btn_report.setText("Report");
+        btn_report.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_report.setFocusable(false);
+        btn_report.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_report.setPreferredSize(new java.awt.Dimension(70, 28));
+        btn_report.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_report.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_reportActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_report);
 
         jTable_Stickdetail.setFont(new java.awt.Font("Geist Mono", 0, 14)); // NOI18N
         jTable_Stickdetail.setModel(new javax.swing.table.DefaultTableModel(
@@ -267,13 +273,19 @@ public class StockDetail_Component extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_reportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportActionPerformed
+        StcokDetailReport rvR = new StcokDetailReport(null, true);
+        rvR.setTitle("Exspenses Report");
+        rvR.setVisible(true);
+    }//GEN-LAST:event_btn_reportActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_report;
     private javax.swing.JLabel count_available;
     private javax.swing.JLabel count_product;
     private javax.swing.JLabel count_stockin;
     private javax.swing.JLabel count_stockout;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -14,19 +14,27 @@ import DTO.sum_totalAmount;
 import Database.DatabaseConfig;
 import Product_Component.ProductModul;
 import java.awt.Font;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -53,7 +61,6 @@ public class Invoices_list extends javax.swing.JPanel {
         showInTabel();
         diplaybox();
 
-        
         // Create the desired font for the header
         JTableHeader header = tbl_invoice_list.getTableHeader();
         Font headerFont = new Font("Century Gothic", Font.BOLD, 18); // Example: Bold, Size 14
@@ -128,6 +135,8 @@ public class Invoices_list extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         report_invoiceList = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JToolBar.Separator();
+        report_daily = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_invoice_list = new javax.swing.JTable();
@@ -179,11 +188,11 @@ public class Invoices_list extends javax.swing.JPanel {
         jToolBar1.add(jSeparator2);
 
         report_invoiceList.setFont(new java.awt.Font("Geist Mono", 0, 14)); // NOI18N
-        report_invoiceList.setText("Report");
+        report_invoiceList.setText("Report DTD");
         report_invoiceList.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         report_invoiceList.setFocusable(false);
         report_invoiceList.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        report_invoiceList.setPreferredSize(new java.awt.Dimension(80, 26));
+        report_invoiceList.setPreferredSize(new java.awt.Dimension(95, 26));
         report_invoiceList.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         report_invoiceList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,6 +200,23 @@ public class Invoices_list extends javax.swing.JPanel {
             }
         });
         jToolBar1.add(report_invoiceList);
+
+        jSeparator3.setEnabled(false);
+        jToolBar1.add(jSeparator3);
+
+        report_daily.setFont(new java.awt.Font("Geist Mono", 0, 14)); // NOI18N
+        report_daily.setText("General Report");
+        report_daily.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        report_daily.setFocusable(false);
+        report_daily.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        report_daily.setPreferredSize(new java.awt.Dimension(118, 26));
+        report_daily.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        report_daily.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                report_dailyActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(report_daily);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -313,36 +339,67 @@ public class Invoices_list extends javax.swing.JPanel {
 
     private void report_invoiceListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_report_invoiceListActionPerformed
         // TODO add your handling code here:
-        DialogInvoiceList dialog_invoiceList = new DialogInvoiceList(null,true );
+        DialogInvoiceList2 dialog_invoiceList = new DialogInvoiceList2(null, true);
         dialog_invoiceList.setTitle("Report Invoice List");
         dialog_invoiceList.setVisible(true);
-       
-
-//        try {
-//            Class.forName("org.postgresql.Driver");
-//            String constr = "jdbc:postgresql://localhost:5432/Inventory?user=postgres&password=dan@12345&connectTimeout=30";
-//            Connection con = DriverManager.getConnection(constr);
-//            String reportPath = "./src/Reports/DailyInvoiceReport.jrxml";//./src/dbdata/
-//            JasperDesign jd = JRXmlLoader.load(reportPath);
-//            String sql = "SELECT invoice_id, invoice_date, total_amount FROM public.invoices ";
-//            JRDesignQuery qry = new JRDesignQuery();
-//            qry.setText(sql);
-//            jd.setQuery(qry);
-//
-//            //if you want no change result
-//            //JasperReport jr = JasperCompileManager.compileReport(reportPath);
-//            //update data source to change the result.
-//            JasperReport jr = JasperCompileManager.compileReport(jd);
-//
-//            JasperPrint jp = JasperFillManager.fillReport(jr, null, con);
-//
-//            JasperViewer.viewReport(jp, false);
-//            con.close();
-//        } catch (SQLException | JRException | ClassNotFoundException ex) {
-//            Logger.getLogger(Invoices_list.class.getName()).log(Level.SEVERE, null, ex);
-//        }
 
     }//GEN-LAST:event_report_invoiceListActionPerformed
+
+    private void report_dailyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_report_dailyActionPerformed
+        DialogInvoiceList dialog_invoiceList = new DialogInvoiceList(null, true);
+        dialog_invoiceList.setTitle("Report Invoice List");
+        dialog_invoiceList.setVisible(true);
+        
+//        Connection conn = null;
+//        try {
+//            // 1. Connect to PostgreSQL database
+//            conn = DriverManager.getConnection(
+//                "jdbc:postgresql://localhost:5432/Inventory?user=postgres&password=dan@12345&connectTimeout=30"
+//            );
+//            System.out.println("✅ Database connection established.");
+//
+//            // 2. Load JRXML report file from classpath
+//            InputStream jrxmlStream = Invoices_list.class.getClassLoader().getResourceAsStream("Reports/newDaily.jrxml");
+//
+//            if (jrxmlStream == null) {
+//                throw new JRException("newDaily.jrxml not found. Ensure it's in src/Reports and properly added to the classpath.");
+//            }
+//
+//            // 3. Compile the JRXML to JasperReport
+//            JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlStream);
+//            System.out.println("JRXML compiled successfully.");
+//
+//            // 4. Set report parameters
+//            Map<String, Object> parameters = new HashMap<>();
+//            parameters.put("REPORT_TITLE", "Daily Invoice Report");
+//            parameters.put("REPORT_DATE_FILTER", java.sql.Date.valueOf(LocalDate.of(2025, 8, 4))); // Example date
+//
+//            // 5. Fill the report with data from the DB
+//            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conn);
+//            System.out.println("Report filled with data.");
+//
+//            // 6. Show the report in viewer (GUI)
+//            JasperViewer.viewReport(jasperPrint, false);
+//            System.out.println("Report displayed successfully.");
+//           
+//        } catch (JRException e) {
+//            System.err.println("JasperReport Error: " + e.getMessage());
+//        } catch (SQLException e) {
+//            System.err.println("Database Error: " + e.getMessage());
+//        } finally {
+//            // 7. Always close DB connection
+//            if (conn != null) {
+//                try {
+//                    conn.close();
+//                    System.out.println("🔒 Database connection closed.");
+//                } catch (SQLException e) {
+//                    System.err.println("⚠️ Failed to close DB connection: " + e.getMessage());
+//                }
+//            }
+//        }
+
+
+    }//GEN-LAST:event_report_dailyActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -359,7 +416,9 @@ public class Invoices_list extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JButton report_daily;
     private javax.swing.JButton report_invoiceList;
     private javax.swing.JTable tbl_invoice_list;
     private javax.swing.JLabel today_amount_total;

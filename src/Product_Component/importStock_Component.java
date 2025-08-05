@@ -8,6 +8,7 @@ import DAO.ImportProductDao;
 import Database.DatabaseConfig;
 import common.CommonUtil;   
 import Product_Component.Dialog.SearchProductDialog;
+import UI.importProductReport;
 import java.awt.Color;
 
 import java.awt.Font;
@@ -176,7 +177,7 @@ public class importStock_Component extends javax.swing.JPanel {
         jSeparator10 = new javax.swing.JToolBar.Separator();
         btn_last = new javax.swing.JButton();
         jSeparator11 = new javax.swing.JToolBar.Separator();
-        btn_last1 = new javax.swing.JButton();
+        btn_report = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txt_import_id = new javax.swing.JTextField();
@@ -368,24 +369,24 @@ public class importStock_Component extends javax.swing.JPanel {
         jSeparator11.setSeparatorSize(new java.awt.Dimension(200, 10));
         jToolBar1.add(jSeparator11);
 
-        btn_last1.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        btn_last1.setText("Report");
-        btn_last1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_last1.setFocusable(false);
-        btn_last1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btn_last1.setPreferredSize(new java.awt.Dimension(70, 28));
-        btn_last1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btn_last1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_report.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btn_report.setText("Report");
+        btn_report.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_report.setFocusable(false);
+        btn_report.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_report.setPreferredSize(new java.awt.Dimension(70, 28));
+        btn_report.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_report.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_last1MouseClicked(evt);
+                btn_reportMouseClicked(evt);
             }
         });
-        btn_last1.addActionListener(new java.awt.event.ActionListener() {
+        btn_report.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_last1ActionPerformed(evt);
+                btn_reportActionPerformed(evt);
             }
         });
-        jToolBar1.add(btn_last1);
+        jToolBar1.add(btn_report);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -812,13 +813,15 @@ public class importStock_Component extends javax.swing.JPanel {
         tbl_import_stock.setRowSelectionInterval(position, position);
     }//GEN-LAST:event_btn_lastActionPerformed
 
-    private void btn_last1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_last1MouseClicked
+    private void btn_reportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_reportMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_btn_last1MouseClicked
+    }//GEN-LAST:event_btn_reportMouseClicked
 
-    private void btn_last1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_last1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_last1ActionPerformed
+    private void btn_reportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportActionPerformed
+        importProductReport rvR = new importProductReport(null, true);
+        rvR.setTitle("ImportProduct Report");
+        rvR.setVisible(true);
+    }//GEN-LAST:event_btn_reportActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -826,9 +829,9 @@ public class importStock_Component extends javax.swing.JPanel {
     private javax.swing.JButton btn_edit;
     private javax.swing.JButton btn_first;
     private javax.swing.JButton btn_last;
-    private javax.swing.JButton btn_last1;
     private javax.swing.JButton btn_next;
     private javax.swing.JButton btn_prev;
+    private javax.swing.JButton btn_report;
     private javax.swing.JButton btn_reset;
     private javax.swing.JButton btn_stored;
     private javax.swing.JButton btn_update;

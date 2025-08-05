@@ -32,7 +32,8 @@ public class SaleModul extends javax.swing.JPanel {
         sl.setVisible(false);
         inl.setVisible(false);
         men.setCard();
-       
+        jButton_print_sale_list.setVisible(false);
+        jButton_refresh.setVisible(false);
         
         
     }

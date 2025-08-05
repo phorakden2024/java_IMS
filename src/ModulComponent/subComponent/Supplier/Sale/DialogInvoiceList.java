@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/OkCancelDialog.java to edit this template
  */
 package ModulComponent.subComponent.Supplier.Sale;
-    
+
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
@@ -12,13 +12,18 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 import java.io.File;
+import java.io.InputStream;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.temporal.TemporalAdjusters;
 import java.util.HashMap;
+import java.util.Map;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -28,6 +33,8 @@ import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import java.sql.Statement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -81,15 +88,13 @@ public class DialogInvoiceList extends javax.swing.JDialog {
 
         btnperview = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        spinnerStartDate = new javax.swing.JSpinner();
-        spinnerEndDate = new javax.swing.JSpinner();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         cboReportFormat = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
 
         setAlwaysOnTop(true);
         setAutoRequestFocus(false);
+        setModalExclusionType(null);
+        setModalityType(null);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
@@ -110,26 +115,10 @@ public class DialogInvoiceList extends javax.swing.JDialog {
             }
         });
 
-        spinnerStartDate.setFont(new java.awt.Font("Geist Mono", 0, 18)); // NOI18N
-        spinnerStartDate.setModel(new javax.swing.SpinnerDateModel());
-        spinnerStartDate.setDoubleBuffered(true);
-        spinnerStartDate.setEditor(new javax.swing.JSpinner.DateEditor(spinnerStartDate, "yyyy-MM-dd"));
-
-        spinnerEndDate.setFont(new java.awt.Font("Geist Mono", 0, 18)); // NOI18N
-        spinnerEndDate.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1753528640207L), null, null, java.util.Calendar.DAY_OF_MONTH));
-        spinnerEndDate.setDoubleBuffered(true);
-        spinnerEndDate.setEditor(new javax.swing.JSpinner.DateEditor(spinnerEndDate, "yyyy-MM-dd"));
-
-        jLabel1.setFont(new java.awt.Font("Geist Mono", 0, 16)); // NOI18N
-        jLabel1.setText("End Date (YYYY-MM-DD)");
-
-        jLabel2.setFont(new java.awt.Font("Geist Mono", 0, 16)); // NOI18N
-        jLabel2.setText("Start Date (YYYY-MM-DD)");
-
         cboReportFormat.setFont(new java.awt.Font("Geist Mono", 0, 14)); // NOI18N
         cboReportFormat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Daily Report", "Monthly Report", "All Report" }));
 
-        jLabel3.setFont(new java.awt.Font("Geist Mono", 0, 16)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Geist Mono", 0, 24)); // NOI18N
         jLabel3.setText("Report Type");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -144,37 +133,26 @@ public class DialogInvoiceList extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cancelButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(spinnerEndDate)
-                                .addComponent(spinnerStartDate)
-                                .addComponent(cboReportFormat, 0, 239, Short.MAX_VALUE))
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3))
-                        .addGap(0, 10, Short.MAX_VALUE)))
+                        .addContainerGap()
+                        .addComponent(cboReportFormat, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spinnerStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spinnerEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(29, 29, 29)
                 .addComponent(cboReportFormat, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cancelButton)
-                    .addComponent(btnperview))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnperview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -185,55 +163,123 @@ public class DialogInvoiceList extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnperviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnperviewActionPerformed
+        Connection conn = null;
 
         try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            String startDate = df.format(this.spinnerStartDate.getValue());
-            String endDate = df.format(this.spinnerEndDate.getValue());
-            System.out.println(startDate);
-            Class.forName("org.postgresql.Driver");
-            String constr = "jdbc:postgresql://localhost:5432/Inventory?user=postgres&password=dan@12345&connectTimeout=30";
-            Connection con = DriverManager.getConnection(constr);
-            String reportPath = "";//./resources/...
-            String sql = "";
+            // 1. Connect to PostgreSQL database
+            conn = DriverManager.getConnection(
+                    "jdbc:postgresql://localhost:5432/Inventory?user=postgres&password=dan@12345&connectTimeout=30"
+            );
+            System.out.println("Database connection established.");
+
             switch (this.cboReportFormat.getSelectedIndex()) {
-                case 0:
-                        //reportPath = ClassLoader.getSystemResource("./src/Reports/DailyInvoiceReport.jrxml").getPath();
-                        reportPath = "./src/Reports/DailyInvoiceReport.jrxml";//./src/dbdata/
-                        sql = "SELECT invoice_id, invoice_date, total_amount FROM public.invoices where invoice_date = '"+startDate+"'";
-                        doClose(RET_OK);
-                    break;
-                case 1:
-                        reportPath = "./src/Reports/MonthlyInvoiceReport.jrxml";//./src/dbdata/
-                        sql = "SELECT invoice_id, invoice_date, total_amount FROM public.invoices ";
-                        doClose(RET_OK);
-                    break;
-                case 2:
-                        reportPath = "./src/Reports/AllInvoiceReport.jrxml";//./src/dbdata/
-                        sql = "SELECT invoice_id, invoice_date, total_amount FROM public.invoices ";
-                        doClose(RET_OK);
-                    break;
-                default:
+                case 0 -> {
+                    // 2. Load JRXML report file from classpath
+                    InputStream jrxmlStream = Invoices_list.class.getClassLoader().getResourceAsStream("Reports/newDaily.jrxml");
+
+                    if (jrxmlStream == null) {
+                        throw new JRException("newDaily.jrxml not found. Ensure it's in src/Reports and properly added to the classpath.");
+                    }
+                    // 3. Compile the JRXML to JasperReport
+                    JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlStream);
+                    System.out.println("JRXML compiled successfully.");
+                    // 4. Set report parameters
+                    Map<String, Object> parameters = new HashMap<>();
+                    parameters.put("REPORT_TITLE", "Daily Invoice Report");
+                    LocalDate currentDate = LocalDate.now();
+                    parameters.put("REPORT_DATE", java.sql.Date.valueOf(currentDate)); // Example date
+
+                    // 5. Fill the report with data from the DB
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conn);
+                    System.out.println("Report filled with data.");
+                    // 6. Show the report in viewer (GUI)
+                    JasperViewer.viewReport(jasperPrint, false);
+                    System.out.println("Report displayed successfully.");
+                    doClose(returnStatus);
+                }
+                case 1 -> {
+                    // 2. Load JRXML report file from classpath
+                    InputStream jrxmlStream = Invoices_list.class.getClassLoader().getResourceAsStream("Reports/MonthlyInvoiceReport.jrxml");
+
+                    if (jrxmlStream == null) {
+                        throw new JRException("newDaily.jrxml not found. Ensure it's in src/Reports and properly added to the classpath.");
+                    }
+                    // 3. Compile the JRXML to JasperReport
+                    JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlStream);
+                    System.out.println("JRXML compiled successfully.");
+                    // 4. Set report parameters
+                    Map<String, Object> parameters = new HashMap<>();
+                    parameters.put("REPORT_TITLE", "Monthly Invoice Report");
+                    LocalDate today = LocalDate.now();
+                    LocalDate startOfMonth = today.with(TemporalAdjusters.firstDayOfMonth());
+                    LocalDate endOfMonth = today.with(TemporalAdjusters.lastDayOfMonth());
+//                    LocalDate startOfMonth = LocalDate.of(2025, 7, 1);
+//                    LocalDate endOfMonth = LocalDate.of(2025, 7, 31);
+
+                    parameters.put("REPORT_START_DATE", java.sql.Date.valueOf(startOfMonth));
+                    parameters.put("REPORT_END_DATE", java.sql.Date.valueOf(endOfMonth));
+                    double monthlyTotal = calculateMonthlyTotal(conn, startOfMonth, endOfMonth);
+                    parameters.put("REPORT_MONTHLY_TOTAL", monthlyTotal);
+
+                    // 5. Fill the report with data from the DB
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conn);
+                    System.out.println("Report filled with data.");
+                    // 6. Show the report in viewer (GUI)
+                    JasperViewer.viewReport(jasperPrint, false);
+                    System.out.println("Report displayed successfully.");
+                    doClose(returnStatus);
+                }
+                case 2 -> {
+                    // 2. Load JRXML report file from classpath
+                    InputStream jrxmlStream = Invoices_list.class.getClassLoader().getResourceAsStream("Reports/AllInvoiceReport.jrxml");
+
+                    if (jrxmlStream == null) {
+                        throw new JRException("newDaily.jrxml not found. Ensure it's in src/Reports and properly added to the classpath.");
+                    }
+                    // 3. Compile the JRXML to JasperReport
+                    JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlStream);
+                    System.out.println("JRXML compiled successfully.");
+                    // 4. Set report parameters
+                    Map<String, Object> parameters = new HashMap<>();
+                    parameters.put("REPORT_TITLE", "All Invoice Report");
+//                    LocalDate today = LocalDate.now();
+//                    LocalDate startOfMonth = today.with(TemporalAdjusters.firstDayOfMonth());
+//                    LocalDate endOfMonth = today.with(TemporalAdjusters.lastDayOfMonth());
+//                    LocalDate startOfMonth = LocalDate.of(2025, 7, 1);
+//                    LocalDate endOfMonth = LocalDate.of(2025, 7, 31);
+
+//                    parameters.put("REPORT_START_DATE", java.sql.Date.valueOf(startOfMonth));
+//                    parameters.put("REPORT_END_DATE", java.sql.Date.valueOf(endOfMonth));
+//                    double monthlyTotal = calculateMonthlyTotal(conn, startOfMonth, endOfMonth);
+//                    parameters.put("REPORT_MONTHLY_TOTAL", monthlyTotal);
+
+                    // 5. Fill the report with data from the DB
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conn);
+                    System.out.println("Report filled with data.");
+                    // 6. Show the report in viewer (GUI)
+                    JasperViewer.viewReport(jasperPrint, false);
+                    System.out.println("Report displayed successfully.");
+                    doClose(returnStatus);
+                }
+                default ->
                     throw new AssertionError();
             }
-            JRDesignQuery qry = new JRDesignQuery();
-            JasperDesign jd = JRXmlLoader.load(reportPath);
-            qry.setText(sql);
-            jd.setQuery(qry);
-
-            //if you want no change result
-            //JasperReport jr = JasperCompileManager.compileReport(reportPath);
-            
-            //update data source to change the result.
-            JasperReport jr = JasperCompileManager.compileReport(jd);
-            HashMap<String, Object> params = new HashMap<>();
-            JasperPrint jp = JasperFillManager.fillReport(jr, params, con);
-
-            JasperViewer.viewReport(jp, false);
-            con.close();
-        } catch (SQLException | JRException | ClassNotFoundException ex) {
-
+        } catch (JRException e) {
+            System.err.println("JasperReport Error: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Database Error: " + e.getMessage());
+        } finally {
+            // 7. Always close DB connection
+            if (conn != null) {
+                try {
+                    conn.close();
+                    System.out.println("🔒 Database connection closed.");
+                } catch (SQLException e) {
+                    System.err.println("⚠️ Failed to close DB connection: " + e.getMessage());
+                }
+            }
         }
+
     }//GEN-LAST:event_btnperviewActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -296,15 +342,22 @@ public class DialogInvoiceList extends javax.swing.JDialog {
         });
     }
 
+    private static double calculateMonthlyTotal(Connection conn, LocalDate startDate, LocalDate endDate) throws SQLException {
+        double total = 0.0;
+        String sql = "SELECT SUM(total_amount) FROM public.invoices WHERE invoice_date BETWEEN '" + startDate + "' AND '" + endDate + "'";
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+            if (rs.next()) {
+                total = rs.getDouble(1);
+            }
+        }
+        return total;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnperview;
     private javax.swing.JButton cancelButton;
     private javax.swing.JComboBox<String> cboReportFormat;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JSpinner spinnerEndDate;
-    private javax.swing.JSpinner spinnerStartDate;
     // End of variables declaration//GEN-END:variables
 
     private int returnStatus = RET_CANCEL;

@@ -156,6 +156,11 @@ public class ExpensesFrm extends javax.swing.JPanel {
         btn_report.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_report.setPreferredSize(new java.awt.Dimension(90, 35));
         btn_report.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_report.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_reportActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btn_report);
         jToolBar1.add(jSeparator3);
 
@@ -319,6 +324,12 @@ public class ExpensesFrm extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Error!");
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btn_reportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportActionPerformed
+        exspenseReport rvR = new exspenseReport(null, true);
+        rvR.setTitle("Exspenses Report");
+        rvR.setVisible(true);
+    }//GEN-LAST:event_btn_reportActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

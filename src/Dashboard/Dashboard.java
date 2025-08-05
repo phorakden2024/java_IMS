@@ -47,6 +47,8 @@ public class Dashboard extends javax.swing.JFrame {
         userRole.setVisible(false);
         navHome.setVisible(false);
         titel_header.setText("Dashboard");
+        
+//        btn_currentStock.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")

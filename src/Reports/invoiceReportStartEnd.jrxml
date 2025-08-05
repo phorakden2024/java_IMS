@@ -1,0 +1,153 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="EnhancedDailyInvoicesReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8a37d9c5-350f-4065-852d-a5eef1902ab2">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="REPORT_START_DATE" forPrompting="false" class="java.util.Date"/>
+	<parameter name="REPORT_END_DATE" forPrompting="false" class="java.util.Date"/>
+	<query language="sql"><![CDATA[SELECT
+            invoice_id,
+            invoice_date,
+            total_amount
+        FROM public.invoices
+        WHERE invoice_date BETWEEN $P{REPORT_START_DATE} AND $P{REPORT_END_DATE}
+        ORDER BY invoice_date, invoice_id]]></query>
+	<field name="invoice_id" class="java.lang.String"/>
+	<field name="invoice_date" class="java.sql.Date"/>
+	<field name="total_amount" class="java.lang.Double"/>
+	<variable name="DailyTotalAmount" resetType="Group" calculation="Sum" resetGroup="InvoiceDateGroup" class="java.lang.Double">
+		<expression><![CDATA[$F{total_amount}]]></expression>
+	</variable>
+	<variable name="GrandTotalAmount" calculation="Sum" class="java.lang.Double">
+		<expression><![CDATA[$F{total_amount}]]></expression>
+	</variable>
+	<group name="InvoiceDateGroup">
+		<expression><![CDATA[$F{invoice_date}]]></expression>
+		<groupHeader>
+			<band height="30">
+				<element kind="textField" uuid="23026009-acdf-4bbc-af9d-517bc76d0673" x="0" y="0" width="555" height="30" backcolor="#E0E0E0" fontSize="14.0" pattern="MMMM dd, yyyy" bold="true" hTextAlign="Left" vTextAlign="Middle">
+					<expression><![CDATA["  Invoices for " + $F{invoice_date}]]></expression>
+					<box>
+						<pen lineWidth="0.5" lineColor="#999999"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#999999"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#999999"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+				</element>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="25">
+				<element kind="textField" uuid="714a0e75-ff21-4396-aff5-7b7e2d3c92d7" x="370" y="0" width="185" height="25" backcolor="#E0E0E0" fontSize="12.0" pattern="$#,##0.00" bold="true" hTextAlign="Center" vTextAlign="Middle">
+					<expression><![CDATA[$V{DailyTotalAmount}]]></expression>
+					<box>
+						<pen lineWidth="0.5" lineColor="#999999"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#999999"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#999999"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="c6ccf9c2-f66d-40b7-9d09-7b5c4bd8e95e" x="185" y="0" width="185" height="25" backcolor="#E0E0E0" fontSize="12.0" bold="true" hTextAlign="Right" vTextAlign="Middle">
+					<text><![CDATA[Daily Total:  ]]></text>
+					<box>
+						<pen lineWidth="0.5" lineColor="#999999"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#999999"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#999999"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+				</element>
+			</band>
+		</groupFooter>
+	</group>
+	<title height="79" splitType="Stretch">
+		<element kind="staticText" uuid="ca8b34c2-561e-46e6-b63e-b3497a7cf987" x="0" y="0" width="555" height="40" fontSize="24.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Enhanced Daily Invoices Report]]></text>
+		</element>
+		<element kind="textField" uuid="7cccc8e6-9274-43de-81c8-a76491efe544" x="0" y="40" width="555" height="30" fontSize="16.0" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA["From " + new java.text.SimpleDateFormat("MMMM dd, yyyy").format($P{REPORT_START_DATE}) + " to " + new java.text.SimpleDateFormat("MMMM dd, yyyy").format($P{REPORT_END_DATE})]]></expression>
+		</element>
+	</title>
+	<columnHeader height="30" splitType="Stretch">
+		<element kind="staticText" uuid="57857b98-a7ed-4b13-bb34-b4c517be5c09" x="0" y="0" width="185" height="30" backcolor="#CCCCCC" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Invoice ID]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="67e2aeae-5477-4689-9592-803c2a140c3e" x="185" y="0" width="185" height="30" backcolor="#CCCCCC" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Invoice Date]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="2e4872fa-0012-4ce6-afe3-63350be4b649" x="370" y="0" width="185" height="30" backcolor="#CCCCCC" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Total Amount]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<element kind="textField" uuid="0da62db6-db67-4ce5-bd1c-b025cca77c73" x="0" y="0" width="185" height="20" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{invoice_id}]]></expression>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="ceff43e6-8392-4f54-bd56-88b90c4feacc" x="185" y="0" width="185" height="20" pattern="MM/dd/yyyy" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{invoice_date}]]></expression>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="c0427f14-26d2-4fd9-8ac9-c31aaf81fc7b" x="370" y="0" width="185" height="20" pattern="$#,##0.00" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{total_amount}]]></expression>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+		</band>
+	</detail>
+	<summary height="40">
+		<element kind="textField" uuid="205abcf8-fd31-47ad-829a-707cf94f571f" x="370" y="10" width="185" height="30" backcolor="#99CCFF" fontSize="12.0" pattern="$#,##0.00" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[$V{GrandTotalAmount}]]></expression>
+			<box>
+				<pen lineWidth="0.5" lineColor="#999999"/>
+				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#999999"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#999999"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="01721e95-4fd2-42e2-9b04-2e27b55751e1" x="185" y="10" width="185" height="30" backcolor="#99CCFF" fontSize="12.0" bold="true" hTextAlign="Right" vTextAlign="Middle">
+			<text><![CDATA[Grand Total:  ]]></text>
+			<box>
+				<pen lineWidth="0.5" lineColor="#999999"/>
+				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#999999"/>
+				<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#999999"/>
+				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+	</summary>
+</jasperReport>

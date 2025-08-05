@@ -7,6 +7,7 @@ package Product_Component;
 import DTO.AdjustProductDto;
 import DTO.importProductDto;
 import Database.DatabaseConfig;
+import UI.adjustProductReport;
 import common.CommonUtil;
 import java.awt.Color;
 import java.awt.Font;
@@ -177,7 +178,7 @@ public class AdjuetSotck_Compoent extends javax.swing.JInternalFrame {
         jSeparator7 = new javax.swing.JToolBar.Separator();
         btn_last = new javax.swing.JButton();
         jSeparator11 = new javax.swing.JToolBar.Separator();
-        btn_last1 = new javax.swing.JButton();
+        btn_report = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         txt_prodect_id = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -381,24 +382,24 @@ public class AdjuetSotck_Compoent extends javax.swing.JInternalFrame {
         jSeparator11.setSeparatorSize(new java.awt.Dimension(200, 10));
         jToolBar_stcokdetail.add(jSeparator11);
 
-        btn_last1.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        btn_last1.setText("Report");
-        btn_last1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_last1.setFocusable(false);
-        btn_last1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btn_last1.setPreferredSize(new java.awt.Dimension(70, 28));
-        btn_last1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btn_last1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_report.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btn_report.setText("Report");
+        btn_report.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_report.setFocusable(false);
+        btn_report.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_report.setPreferredSize(new java.awt.Dimension(70, 28));
+        btn_report.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_report.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_last1MouseClicked(evt);
+                btn_reportMouseClicked(evt);
             }
         });
-        btn_last1.addActionListener(new java.awt.event.ActionListener() {
+        btn_report.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_last1ActionPerformed(evt);
+                btn_reportActionPerformed(evt);
             }
         });
-        jToolBar_stcokdetail.add(btn_last1);
+        jToolBar_stcokdetail.add(btn_report);
 
         txt_prodect_id.setFont(new java.awt.Font("Geist Mono", 0, 18)); // NOI18N
 
@@ -846,13 +847,15 @@ public class AdjuetSotck_Compoent extends javax.swing.JInternalFrame {
         jTable_AdjustSotck.setRowSelectionInterval(position, position);
     }//GEN-LAST:event_btn_firstActionPerformed
 
-    private void btn_last1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_last1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_last1MouseClicked
+    private void btn_reportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_reportMouseClicked
+        adjustProductReport rvR = new adjustProductReport(null, true);
+        rvR.setTitle("ImportProduct Report");
+        rvR.setVisible(true);
+    }//GEN-LAST:event_btn_reportMouseClicked
 
-    private void btn_last1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_last1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_last1ActionPerformed
+    private void btn_reportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportActionPerformed
+        
+    }//GEN-LAST:event_btn_reportActionPerformed
 
     private void cbox_stockinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbox_stockinActionPerformed
         // TODO add your handling code here:
@@ -865,9 +868,9 @@ public class AdjuetSotck_Compoent extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_edit;
     private javax.swing.JButton btn_first;
     private javax.swing.JButton btn_last;
-    private javax.swing.JButton btn_last1;
     private javax.swing.JButton btn_next;
     private javax.swing.JButton btn_prev;
+    private javax.swing.JButton btn_report;
     private javax.swing.JButton btn_reset;
     private javax.swing.JButton btn_search;
     private javax.swing.JButton btn_store;
